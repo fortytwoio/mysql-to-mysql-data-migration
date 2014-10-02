@@ -3,6 +3,11 @@ mysql-to-mysql-data-migration
 
 A node.js module that helps you move data from one mysql to another mysql database
 
+### Run:
+```javascript
+coffee startSeeding.coffee
+```
+
 ### Configure:
 
 ##### dataConfig: 
@@ -18,7 +23,8 @@ module.exports =
 ```
 
 
-##### config: (basic mysql connection object)
+##### config: 
+basic mysql connection object
 ```javascript
 exports.fromDatabase =
 	connectionLimit: 20
@@ -35,10 +41,9 @@ exports.toDatabase =
 	database: ""
 ```
 
-
 ### Status:
 Works from a single table to another single table!
 
 ### Coming Soon:
--joining tables
--postgres support
+* joining tables
+* postgres support
