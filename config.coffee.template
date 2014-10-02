@@ -1,0 +1,13 @@
+exports.fromDatabase =
+	connectionLimit: 20
+	host: ""
+	user: ""
+	password: ""
+	database: ""
+
+exports.toDatabase =
+	connectionLimit: 20
+	host: ""
+	user: ""
+	password: ""
+	database: ""

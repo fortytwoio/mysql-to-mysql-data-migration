@@ -1,0 +1,7 @@
+module.exports = 
+  facility:
+    fromTable: "old_table"
+    toTable: "new_table"
+    formatObject:
+      id: "id"
+      username: "name"
