@@ -4,21 +4,21 @@ getToConnection = require('./database').getToConnection
 moment = require('moment')
 
 module.exports = (config, callback) ->
-  migrate config, (error, status) ->
-    console.log status, error
-
-migrate = (config, callback) ->
   formatObject = config.formatObject
-  fromQuery = "SELECT * FROM #{config.fromTable} WHERE nid = 1"
+  fromQuery = "SELECT #{config.select} FROM #{config.fromTable}"
+  fromQuery += " #{config.join} " if config.join
+  fromQuery+= " WHERE #{config.where} " if config.where
   toQuery = "INSERT INTO #{config.toTable} ("
   for i of formatObject
     toQuery += formatObject[i]+","
   toQuery = toQuery.substr(0, toQuery.length - 1)
   toQuery +=") VALUES ?"
+  console.log fromQuery
   getFromConnection (fromConnection) ->
     fromConnection.query fromQuery, (error, result) ->
       fromConnection.release()
-      return callback error, "Select Failed" if error 
+      console.log result.length
+      return callback error, "Select Failed" if error
       data = formatify formatObject, result
       getToConnection (toConnection) ->
         toConnection.query toQuery, [data], (error, result) ->

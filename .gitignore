@@ -28,3 +28,12 @@ node_modules
 .lock-wscript
 dataConfig.coffee
 config.coffee
+7.okt.sql
+.idea
+.idea/encodings.xml
+.idea/misc.xml
+.idea/modules.xml
+.idea/mysql-to-mysql-data-migration.iml
+.idea/scopes
+.idea/vcs.xml
+.idea/workspace.xml
