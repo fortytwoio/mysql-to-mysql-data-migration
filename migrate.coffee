@@ -3,23 +3,29 @@ getFromConnection = require('./database').getFromConnection
 getToConnection = require('./database').getToConnection
 moment = require('moment')
 
-module.exports = (config, callback) ->
-  formatObject = config.formatObject
+buildFromQuery = (config) ->
   fromQuery = "SELECT #{config.select} FROM #{config.fromTable}"
   fromQuery += " #{config.join} " if config.join
   fromQuery+= " WHERE #{config.where} " if config.where
+
+
+module.exports = (config, callback) ->
+  fromQuery = buildFromQuery config unless config.query
+  fromQuery = config.query if config.query
+  formatObject = config.formatObject
   toQuery = "INSERT INTO #{config.toTable} ("
   for i of formatObject
     toQuery += formatObject[i]+","
   toQuery = toQuery.substr(0, toQuery.length - 1)
   toQuery +=") VALUES ?"
-  console.log fromQuery
+  console.log fromQuery if config.log
   getFromConnection (fromConnection) ->
     fromConnection.query fromQuery, (error, result) ->
       fromConnection.release()
-      console.log result.length
       return callback error, "Select Failed" if error
+      console.log result.length if config.log
       data = formatify formatObject, result
+      console.log data if config.log
       getToConnection (toConnection) ->
         toConnection.query toQuery, [data], (error, result) ->
           toConnection.release()

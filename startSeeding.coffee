@@ -3,19 +3,14 @@ config = require './dataConfig'
 async = require 'async'
 cleanup = require './cleanup'
 
-async.series [
-  (callback) ->
-    cleanup callback
-  (callback) ->
-    migrate config.company, callback
-  (callback) ->
-    migrate config.facility, callback
-  (callback) ->
-    migrate config.sport, callback
-  (callback) ->
-    migrate config.court, callback
-  (callback) ->
-    migrate config.courtSports, callback
-], (error, results) ->
-  console.log "done-------------------------------"
-  console.log error, results
+cleanup (error, result) ->
+  console.log error
+  console.log result
+  if error
+    return "error"
+  else
+    async.timesSeries config.length, ((n, next) ->
+      migrate config[n], next
+    ), (error, results) ->
+      console.log "done-------------------------------"
+      console.log error, results
