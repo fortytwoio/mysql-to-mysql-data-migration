@@ -37,3 +37,4 @@ config.coffee
 .idea/scopes
 .idea/vcs.xml
 .idea/workspace.xml
+transformMethods.coffee

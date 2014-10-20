@@ -1,16 +1,14 @@
 migrate = require './migrate'
 config = require './dataConfig'
 async = require 'async'
-cleanup = require './cleanup'
 
-cleanup (error, result) ->
-  console.log error
-  console.log result
-  if error
-    return "error"
+async.timesSeries config.length, ((n, next) ->
+  migrate config[n], next
+), (error, results) ->
+  if error 
+    console.log "---------------ERROR---------------"
+    console.log error
   else
-    async.timesSeries config.length, ((n, next) ->
-      migrate config[n], next
-    ), (error, results) ->
-      console.log "done-------------------------------"
-      console.log error, results
+    console.log "---------------DONE---------------"
+    console.log results
+    console.log results.length

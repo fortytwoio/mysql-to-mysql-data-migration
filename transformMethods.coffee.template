@@ -1,0 +1,11 @@
+getFromConnection = require('./database').getFromConnection
+getToConnection = require('./database').getToConnection
+async = require('async')
+
+
+someTransformMethod = (config, callback) ->
+    callback null, null
+
+methods = []
+methods["someTransformMethod"] = someTransformMethod
+module.exports = methods
